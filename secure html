@@ -1,0 +1,52 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure File Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Secure File Management System</h1>
+    </header>
+    
+    <section id="authSection">
+        <h2>User Authentication</h2>
+        <input type="text" id="username" placeholder="Enter username">
+        <input type="password" id="password" placeholder="Enter password">
+        <button onclick="authenticateUser()">Login / Sign Up</button>
+    </section>
+    
+    <section id="fileManager" style="display:none;">
+        <h2>Upload & Manage Files</h2>
+        <input type="file" id="fileUpload">
+        <button onclick="uploadFile()">Upload</button>
+        <div id="fileList"></div>
+        <button onclick="logout()">Logout</button>
+    </section>
+    
+    <section id="fileHistory">
+        <h2>File Upload History</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>Size</th>
+                    <th>Type</th>
+                    <th>Uploaded Time</th>
+                </tr>
+            </thead>
+            <tbody id="historyTable"></tbody>
+        </table>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 Secure File Management System. All rights reserved.</p>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
+
+
