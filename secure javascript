@@ -1,0 +1,58 @@
+function uploadFile() {
+    let fileInput = document.getElementById("fileUpload");
+    let fileList = document.getElementById("fileList");
+    
+    if (fileInput.files.length > 0) {
+        let file = fileInput.files[0];
+        
+        if (file.size > 5 * 1024 * 1024) { // Restrict files larger than 5MB
+            alert("File size exceeds 5MB limit.");
+            return;
+        }
+        
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let encodedContent = btoa(e.target.result);
+            let listItem = document.createElement("div");
+            listItem.classList.add("file-item");
+            listItem.innerHTML = `
+                <p><strong>File Name:</strong> ${file.name}</p>
+                <p><strong>Size:</strong> ${(file.size / 1024).toFixed(2)} KB</p>
+                <p><strong>Type:</strong> ${file.type}</p>
+                <button onclick="downloadFile('${encodedContent}', '${file.name}')">Download</button>
+                <button onclick="deleteFile(this)">Delete</button>
+            `;
+            
+            if (file.type.startsWith("image")) {
+                let img = document.createElement("img");
+                img.src = e.target.result;
+                img.style.maxWidth = "200px";
+                img.style.display = "block";
+                img.style.margin = "10px auto";
+                listItem.appendChild(img);
+            } else if (file.type.startsWith("text")) {
+                let textPreview = document.createElement("p");
+                textPreview.textContent = atob(encodedContent).substring(0, 100) + "...";
+                listItem.appendChild(textPreview);
+            }
+            fileList.appendChild(listItem);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        alert("Please select a file to upload.");
+    }
+}
+
+function downloadFile(encodedContent, fileName) {
+    let link = document.createElement("a");
+    link.href = "data:application/octet-stream;base64," + encodedContent;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function deleteFile(button) {
+    button.parentElement.remove();
+}
+ 
